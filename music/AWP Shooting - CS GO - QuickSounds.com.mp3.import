@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://pse4arvrcnuy"
+path="res://.godot/imported/AWP Shooting - CS GO - QuickSounds.com.mp3-3fe3da8d3231c1684712d0d6402bc69f.mp3str"
+
+[deps]
+
+source_file="res://music/AWP Shooting - CS GO - QuickSounds.com.mp3"
+dest_files=["res://.godot/imported/AWP Shooting - CS GO - QuickSounds.com.mp3-3fe3da8d3231c1684712d0d6402bc69f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

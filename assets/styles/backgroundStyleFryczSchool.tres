@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://c5hxpeyb2nne8"]
+
+[ext_resource type="Texture2D" uid="uid://r36s53ctdjd6" path="res://assets/other/MainMenuScreen.png" id="1_5jn8v"]
+
+[resource]
+texture = ExtResource("1_5jn8v")
+modulate_color = Color(0.466181, 0.466181, 0.466181, 1)

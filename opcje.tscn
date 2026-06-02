@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://45w1e6yi34wr"]
+
+[ext_resource type="Script" uid="uid://dk8igd6mf7njp" path="res://opcje.gd" id="1_cs4et"]
+[ext_resource type="AudioStream" uid="uid://phrrhpvooos6" path="res://music/MainMenu.mp3" id="2_f6jym"]
+[ext_resource type="StyleBox" uid="uid://c5hxpeyb2nne8" path="res://assets/styles/backgroundStyleFryczSchool.tres" id="2_l8cjx"]
+[ext_resource type="Texture2D" uid="uid://cqhot3fhrdyot" path="res://assets/buttons/Opcje_base.png" id="4_lck6x"]
+[ext_resource type="AudioStream" uid="uid://bm0bsvnug36e6" path="res://music/virtual_vibes-single-mouse-click-sound-hd-379373 (1).mp3" id="5_e3ihq"]
+[ext_resource type="Texture2D" uid="uid://cjtd4djl6x6uc" path="res://assets/other/close.png" id="6_n7qmi"]
+
+[node name="Opcje" type="Control" unique_id=1870828972]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cs4et")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1230406840]
+stream = ExtResource("2_f6jym")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="Background" type="Panel" parent="." unique_id=1083949514]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("2_l8cjx")
+
+[node name="MusicContainer" type="VBoxContainer" parent="." unique_id=1120034827]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_right = 576.0
+offset_bottom = 215.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Music Volume" type="Label" parent="MusicContainer" unique_id=1101680816]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.43137255, 0.98039216, 0.21568628, 1)
+theme_override_font_sizes/font_size = 32
+text = "Music:
+"
+horizontal_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="MusicContainer" unique_id=376940312]
+layout_mode = 2
+rounded = true
+tick_count = 100
+
+[node name="SFXContainer" type="VBoxContainer" parent="." unique_id=975034799]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -85.0
+offset_right = 576.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SFX Volume" type="Label" parent="SFXContainer" unique_id=1852927950]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2784314, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "SFX:
+"
+horizontal_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="SFXContainer" unique_id=725057817]
+layout_mode = 2
+rounded = true
+tick_count = 100
+
+[node name="CreditsButton" type="Button" parent="." unique_id=1989350141]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -253.0
+offset_top = -194.0
+offset_right = 240.0
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 0
+icon = ExtResource("4_lck6x")
+
+[node name="CreditsText" type="Label" parent="." unique_id=1624411444]
+layout_mode = 0
+offset_top = 382.0
+offset_right = 1151.0
+offset_bottom = 646.0
+text = "Kredyty
+CeglaDEV, GitaraDEV - Muzyka
+CeglaDEV, DrzwiDEV - Tekstury
+CeglaDEV - Kod
+
+Honorable Mentions:
+Jolero Luźna Guma
+Clanker
+"
+horizontal_alignment = 1
+
+[node name="ButtonClickSound" type="AudioStreamPlayer" parent="." unique_id=2038172655]
+stream = ExtResource("5_e3ihq")
+
+[node name="CloseButton" type="Button" parent="." unique_id=356051217]
+z_index = 10
+layout_mode = 1
+offset_right = 94.0
+offset_bottom = 95.0
+mouse_filter = 1
+action_mode = 0
+icon = ExtResource("6_n7qmi")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="value_changed" from="MusicContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="SFXContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

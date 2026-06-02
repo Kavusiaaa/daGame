@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://dl0b1x31c3vm8"]
+
+[ext_resource type="Script" uid="uid://c1wttvqtsypdb" path="res://main_menu.gd" id="1_irqom"]
+[ext_resource type="Texture2D" uid="uid://b84d7b626vxtq" path="res://assets/buttons/Start_base.png" id="1_vql1f"]
+[ext_resource type="Texture2D" uid="uid://bcdbye2xxe05l" path="res://assets/buttons/Start_pressed.png" id="2_1lsig"]
+[ext_resource type="StyleBox" uid="uid://c5hxpeyb2nne8" path="res://assets/styles/backgroundStyleFryczSchool.tres" id="2_iotk1"]
+[ext_resource type="Texture2D" uid="uid://cxix5dwkowfp5" path="res://assets/other/Icon.png" id="2_jc88h"]
+[ext_resource type="Texture2D" uid="uid://cqhot3fhrdyot" path="res://assets/buttons/Opcje_base.png" id="2_k731l"]
+[ext_resource type="Texture2D" uid="uid://bkub7oaf2q821" path="res://assets/buttons/Wyjscie_base.png" id="3_fdir8"]
+[ext_resource type="Texture2D" uid="uid://gfe63umlc4fy" path="res://assets/other/Mainmenucoutline.png" id="3_ub4sf"]
+[ext_resource type="Texture2D" uid="uid://b2hn1tuvx67fr" path="res://assets/buttons/Opcje_pressed.png" id="4_xourr"]
+[ext_resource type="Texture2D" uid="uid://k46pk4qr8q46" path="res://assets/buttons/Wyjscie_pressed.png" id="6_llxoa"]
+[ext_resource type="AudioStream" uid="uid://cftmqq68ffsvp" path="res://music/Adventure Theme.mp3" id="11_iotk1"]
+[ext_resource type="AudioStream" uid="uid://pse4arvrcnuy" path="res://music/AWP Shooting - CS GO - QuickSounds.com.mp3" id="12_iotk1"]
+[ext_resource type="AudioStream" uid="uid://bm0bsvnug36e6" path="res://music/virtual_vibes-single-mouse-click-sound-hd-379373 (1).mp3" id="13_w44g7"]
+[ext_resource type="FontFile" uid="uid://b3spd7ye11ts6" path="res://assets/styles/Montserrat-Bold.ttf" id="14_w44g7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hbe1y"]
+texture = ExtResource("2_jc88h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_axtku"]
+texture = ExtResource("3_ub4sf")
+
+[node name="MainMenu" type="Control" unique_id=209755341]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_irqom")
+
+[node name="Background" type="Panel" parent="." unique_id=1001694068]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_iotk1")
+
+[node name="Logo" type="Panel" parent="." unique_id=1756544731]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.5
+offset_top = -227.0
+offset_right = 411.5
+offset_bottom = 227.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_hbe1y")
+
+[node name="Frame" type="Panel" parent="." unique_id=515678865]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_axtku")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=757142607]
+z_index = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -218.0
+offset_right = 250.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Start" type="TextureButton" parent="VBoxContainer" unique_id=101702897]
+z_index = 1
+layout_mode = 2
+tooltip_text = "Start"
+mouse_filter = 1
+action_mode = 0
+texture_normal = ExtResource("1_vql1f")
+texture_pressed = ExtResource("2_1lsig")
+texture_hover = ExtResource("2_1lsig")
+
+[node name="Opcje" type="TextureButton" parent="VBoxContainer" unique_id=1661952302]
+z_index = 1
+layout_mode = 2
+tooltip_text = "Opcje"
+mouse_filter = 1
+texture_normal = ExtResource("2_k731l")
+texture_pressed = ExtResource("4_xourr")
+texture_hover = ExtResource("4_xourr")
+
+[node name="Wyjscie" type="TextureButton" parent="VBoxContainer" unique_id=1629329037]
+z_index = 1
+layout_mode = 2
+tooltip_text = "Wyjście"
+mouse_filter = 1
+texture_normal = ExtResource("3_fdir8")
+texture_pressed = ExtResource("6_llxoa")
+texture_hover = ExtResource("6_llxoa")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=325933532]
+stream = ExtResource("11_iotk1")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+
+[node name="AWP_Sound" type="AudioStreamPlayer" parent="." unique_id=451087791]
+stream = ExtResource("12_iotk1")
+volume_db = 24.0
+bus = &"SFX"
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="." unique_id=1723599925]
+stream = ExtResource("13_w44g7")
+volume_db = 8.0
+bus = &"SFX"
+
+[node name="Version" type="Label" parent="." unique_id=1368301448]
+z_index = 2
+layout_mode = 0
+offset_left = 6.0
+offset_top = 629.0
+offset_right = 155.0
+offset_bottom = 655.0
+theme_override_colors/font_color = Color(0.011764706, 0.011764706, 0.011764706, 1)
+theme_override_fonts/font = ExtResource("14_w44g7")
+text = "v.0.0.5 - \"Predoor\""
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Opcje" to="." method="_on_opcje_pressed"]
+[connection signal="pressed" from="VBoxContainer/Wyjscie" to="." method="_on_wyjscie_pressed"]
