@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b3cxt450uivmk" path="res://assets/tiles/floor_beta.png" id="2_ryrou"]
 [ext_resource type="Texture2D" uid="uid://py4ny3avrhvt" path="res://assets/tiles/wall.png" id="3_apydt"]
 [ext_resource type="PackedScene" uid="uid://c3h03dvgudg6s" path="res://door.tscn" id="5_wvpkg"]
+[ext_resource type="PackedScene" uid="uid://ck6nawhto6p04" path="res://table.tscn" id="6_ixv6b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qt6c6"]
 texture = ExtResource("2_ryrou")
@@ -69,6 +70,11 @@ position = Vector2(-4, -12)
 
 [node name="TeleportPoint" parent="Door" index="2" unique_id=770240921]
 position = Vector2(1535, -2656)
+
+[node name="Table1" parent="." unique_id=230462466 instance=ExtResource("6_ixv6b")]
+position = Vector2(-2370, 2432)
+rotation = 1.5701586
+scale = Vector2(1.9589834, 1.7214671)
 
 [editable path="Door_01"]
 [editable path="Door"]

@@ -130,7 +130,7 @@ offset_right = 155.0
 offset_bottom = 655.0
 theme_override_colors/font_color = Color(0.011764706, 0.011764706, 0.011764706, 1)
 theme_override_fonts/font = ExtResource("14_w44g7")
-text = "v.0.0.5 - \"Predoor\""
+text = "v.0.0.6 - \"GitHub_1\""
 
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Opcje" to="." method="_on_opcje_pressed"]
