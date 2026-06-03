@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3cxt450uivmk"
-path="res://.godot/imported/floor_beta.png-dd7dc723002ee3d5d9528f8db68037e2.ctex"
+uid="uid://xt8hnufs8gok"
+path="res://.godot/imported/drewnianyStol01.png-5cf1e0f1a8b7496aef3045eba160df43.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/floor_beta.png"
-dest_files=["res://.godot/imported/floor_beta.png-dd7dc723002ee3d5d9528f8db68037e2.ctex"]
+source_file="res://assets/other/drewnianyStol01.png"
+dest_files=["res://.godot/imported/drewnianyStol01.png-5cf1e0f1a8b7496aef3045eba160df43.ctex"]
 
 [params]
 
