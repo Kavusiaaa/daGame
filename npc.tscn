@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://eiust1kpddet"]
+
+[ext_resource type="Script" uid="uid://cm3kau1skf1e4" path="res://npc.gd" id="1_xxcha"]
+[ext_resource type="Texture2D" uid="uid://b4rqlp38igbbf" path="res://assets/sprites/henrykStikmenNoCopyright.png" id="2_kh24r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ul7y6"]
+size = Vector2(27, 57)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xxcha"]
+
+[node name="npc" type="Node2D" unique_id=1442010042]
+script = ExtResource("1_xxcha")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020572904]
+position = Vector2(-0.5, -1.5)
+shape = SubResource("RectangleShape2D_ul7y6")
+
+[node name="Stickman" type="Sprite2D" parent="." unique_id=784354395]
+texture = ExtResource("2_kh24r")
+
+[node name="Chat_detection_area" type="Area2D" parent="." unique_id=1577388636]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat_detection_area" unique_id=343960763]
+scale = Vector2(4, 4)
+shape = SubResource("CircleShape2D_xxcha")
+
+[node name="Timer" type="Timer" parent="." unique_id=1938869503]
+autostart = true
