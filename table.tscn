@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ck6nawhto6p04"]
 
-[ext_resource type="Texture2D" uid="uid://xt8hnufs8gok" path="res://assets/other/drewnianyStol01.png" id="1_jd0nb"]
+[ext_resource type="Texture2D" uid="uid://bxoyh441g17vn" path="res://assets/other/stolLepszy1.png" id="1_jd0nb"]
 
 [node name="Node2D" type="Node2D" unique_id=230462466]
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=480437980]
+[node name="StolLepszy1" type="Sprite2D" parent="." unique_id=1355338768]
 texture = ExtResource("1_jd0nb")
