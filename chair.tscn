@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dafaen66og2gv"]
+
+[ext_resource type="Texture2D" uid="uid://cg2ujh35cd2vr" path="res://assets/other/krzesloBeta1.png" id="1_knj3a"]
+
+[node name="Node2D" type="Node2D" unique_id=1896604921]
+
+[node name="KrzesloBeta1" type="Sprite2D" parent="." unique_id=1059569552]
+position = Vector2(1, 1)
+texture = ExtResource("1_knj3a")
