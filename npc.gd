@@ -25,5 +25,6 @@ func _on_chat_detection_area_body_entered(body: Node2D) -> void:
 
 func _on_chat_detection_area_body_exited(body: Node2D) -> void:
 	if body == player_near:
+		DialogueManager.cancel_dialogue(body)
 		player_near = null
 		prompt.visible = false

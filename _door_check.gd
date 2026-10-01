@@ -27,5 +27,8 @@ func _run_check() -> void:
 		print(door_name, " target: ", player.global_position, " expected: ", destination.global_position)
 		assert(player.global_position.distance_to(destination.global_position) < 1.0)
 		assert(not player.movement_locked)
+	school.get_node("AudioStreamPlayer2D").stop()
+	school.queue_free()
+	await process_frame
 	print("BOTH DOOR DIRECTIONS OK")
 	quit(0)

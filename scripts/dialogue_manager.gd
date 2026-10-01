@@ -4,6 +4,7 @@ var _active := false
 var _lines: Array[Dictionary] = []
 var _index := 0
 var _visible_characters := 0
+var _character_accumulator := 0.0
 var _player: Node
 var _speaker: Label
 var _body: Label
@@ -16,8 +17,12 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if _active and _visible_characters < _body.text.length():
-		_visible_characters = mini(_visible_characters + int(48.0 * delta) + 1, _body.text.length())
-		_body.visible_characters = _visible_characters
+		_character_accumulator += 48.0 * delta
+		var characters_to_reveal := int(_character_accumulator)
+		if characters_to_reveal > 0:
+			_character_accumulator -= characters_to_reveal
+			_visible_characters = mini(_visible_characters + characters_to_reveal, _body.text.length())
+			_body.visible_characters = _visible_characters
 	if _active and Input.is_action_just_pressed("interact"):
 		_advance()
 
@@ -35,10 +40,15 @@ func start_dialogue(default_speaker: String, lines: Array[Dictionary], player: N
 		player.set_movement_locked(true)
 	_show_line(default_speaker)
 
+func cancel_dialogue(player: Node) -> void:
+	if _active and player == _player:
+		_end_dialogue()
+
 func _advance() -> void:
 	if _visible_characters < _body.text.length():
 		_visible_characters = _body.text.length()
-		_body.visible_characters = -1
+		_character_accumulator = 0.0
+		_body.visible_characters = _visible_characters
 		return
 	_index += 1
 	if _index >= _lines.size():
@@ -51,6 +61,7 @@ func _show_line(default_speaker: String) -> void:
 	_speaker.text = str(line.get("speaker", default_speaker))
 	_body.text = str(line.get("text", ""))
 	_visible_characters = 0
+	_character_accumulator = 0.0
 	_body.visible_characters = 0
 	_hint.text = "E - dalej"
 	_prompt_panel.visible = true

@@ -15,5 +15,5 @@ func _on_opcje_pressed(): #Gdy wciśnięto opcje
 func _on_wyjscie_pressed(): #Gdy wciśnięto wyjście
 	$AWP_Sound.play()
 	await get_tree().create_timer($AWP_Sound.stream.get_length()).timeout
-	print("Exit")
+	get_tree().quit()
 	

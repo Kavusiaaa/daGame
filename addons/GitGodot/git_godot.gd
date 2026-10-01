@@ -47,25 +47,28 @@ func _process(delta: float) -> void:
 		$Push_Container/Button.disabled = true
 		pass
 	pass
-func Push():
-	var commit = Entry.text
-	var output := [] 
-	var cmd = ( "cd \""+ path +"\"" 
-	+ "&& git add ." 
-	+ "&& git commit -m \"" + commit +"\"" 
-	+ "&& git push -u origin " + Branch 
-	) 
-	OS.execute( "cmd.exe", ["/c", cmd], output, true ) 
-	for line in output: 
-		print("line",line)
+func _run_git(arguments: Array[String]) -> bool:
+	var output := []
+	var exit_code := OS.execute("git", arguments, output, true)
+	for line in output:
+		print(line)
+	if exit_code != 0:
+		push_error("Git command failed with exit code %d." % exit_code)
+		return false
+	return true
+
+func Push() -> void:
+	var commit_message := Entry.text.strip_edges()
+	if commit_message.is_empty() or Branch == null or str(Branch).is_empty():
+		return
+	if not _run_git(["-C", path, "add", "."]):
+		return
+	if not _run_git(["-C", path, "commit", "-m", commit_message]):
+		return
+	if not _run_git(["-C", path, "push", "-u", "origin", str(Branch)]):
+		return
 	Entry.clear()
 	commit()
-	pass # Replace with function body.
-	
-func Pull():
-	var output := []
-	var cmd = ("cd \""+ path +"\""+"&& git reset --hard " + " && git pull")
-	OS.execute("cmd.exe", ["/c", cmd], output, true)
-	for line in output:
-		print("line",line)
-	pass
+
+func Pull() -> void:
+	_run_git(["-C", path, "pull"])

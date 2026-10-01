@@ -32,20 +32,17 @@ func _ready():
 	music_slider.value = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music"))
 
 	# podłączenie sygnałów
-	sfx_slider.connect("value_changed", Callable(self, "_on_sfx_slider_value_changed"))
-	music_slider.connect("value_changed", Callable(self, "_on_music_slider_value_changed"))
-	credits_button.connect("pressed", Callable(self, "_on_credits_button_pressed"))
-	close_button.connect("pressed", Callable(self, "_on_close_button_pressed"))
+				
 
-
-func _process(delta):
-	if credits_active:
-		credits_label.position.y -= credits_speed * delta
-		if credits_label.position.y + credits_label.size.y < 0:
-			credits_active = false
-			credits_label.visible = false
-
-
+func _process(delta: float) -> void:
+	if not credits_active:
+		return
+	credits_label.position.y -= credits_speed * delta
+	if credits_label.position.y + credits_label.size.y < 0:
+		credits_active = false
+		credits_label.visible = false
+		credits_button.disabled = false
+		credits_button.visible = true
 
 func _on_sfx_slider_value_changed(value):
 	var bus = AudioServer.get_bus_index("SFX")
@@ -57,19 +54,16 @@ func _on_music_slider_value_changed(value):
 
 
 
-func _on_credits_button_pressed():
+func _on_credits_button_pressed() -> void:
+	credits_button.disabled = true
 	$ButtonClickSound.play()
 	await $ButtonClickSound.finished
-	$CreditsButton.visible = false
+	credits_button.visible = false
 	credits_label.visible = true
 	credits_label.position.y = get_viewport_rect().size.y  # start poza ekranem
 	credits_active = true
 
 
-
-
-func _on_close_button_button_down() -> void:
-	pass # Replace with function body.
 
 
 func _on_close_button_pressed() -> void:
