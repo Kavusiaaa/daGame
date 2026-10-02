@@ -10,6 +10,11 @@ size = Vector2(27, 57)
 
 [node name="npc" type="Node2D" unique_id=1442010042]
 script = ExtResource("1_xxcha")
+npc_name = "Nauczyciel"
+dialogue = Array[Dictionary]([{"speaker": "Nauczyciel", "text": "Dobrze sobie radzisz na zajęciach."}, {"speaker": "Gracz", "text": "Staram się!"}, {"speaker": "Nauczyciel", "text": "Przyda ci się ta notatka. Może pomóc przy przyszłych zadaniach."}])
+dialogue_id = &"teacher_note_dialogue"
+completion_reward_id = &"teacher_note_reward"
+completion_reward_item_id = &"teacher_note"
 
 [node name="BodyCollision" type="StaticBody2D" parent="." unique_id=1653540821]
 

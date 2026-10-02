@@ -43,7 +43,14 @@ func transition_player(player: Node2D, destination: Vector2, scene_path: String 
 	_busy = false
 
 func _set_player_locked(player: Node, value: bool) -> void:
-	if is_instance_valid(player) and player.has_method("set_movement_locked"):
+	if not is_instance_valid(player):
+		return
+	if player.has_method("acquire_movement_lock"):
+		if value:
+			player.acquire_movement_lock(&"transition")
+		else:
+			player.release_movement_lock(&"transition")
+	elif player.has_method("set_movement_locked"):
 		player.set_movement_locked(value)
 
 func _fade_to(alpha: float, duration: float) -> void:
