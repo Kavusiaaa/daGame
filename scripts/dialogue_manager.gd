@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal dialogue_completed(dialogue_id: StringName, player: Node)
+
 var _active := false
 var _lines: Array[Dictionary] = []
 var _index := 0
@@ -10,6 +12,7 @@ var _speaker: Label
 var _body: Label
 var _hint: Label
 var _prompt_panel: PanelContainer
+var _active_dialogue_id: StringName = &""
 
 func _ready() -> void:
 	layer = 90
@@ -29,14 +32,17 @@ func _process(delta: float) -> void:
 func is_active() -> bool:
 	return _active
 
-func start_dialogue(default_speaker: String, lines: Array[Dictionary], player: Node) -> void:
+func start_dialogue(default_speaker: String, lines: Array[Dictionary], player: Node, dialogue_id: StringName = &"") -> void:
 	if _active or lines.is_empty() or not is_instance_valid(player):
 		return
-	_lines = lines
+	_lines = lines.duplicate(true)
 	_index = 0
 	_player = player
+	_active_dialogue_id = dialogue_id
 	_active = true
-	if player.has_method("set_movement_locked"):
+	if player.has_method("acquire_movement_lock"):
+		player.acquire_movement_lock(&"dialogue")
+	elif player.has_method("set_movement_locked"):
 		player.set_movement_locked(true)
 	_show_line(default_speaker)
 
@@ -52,7 +58,7 @@ func _advance() -> void:
 		return
 	_index += 1
 	if _index >= _lines.size():
-		_end_dialogue()
+		_end_dialogue(true)
 	else:
 		_show_line("")
 
@@ -66,13 +72,19 @@ func _show_line(default_speaker: String) -> void:
 	_hint.text = "E - dalej"
 	_prompt_panel.visible = true
 
-func _end_dialogue() -> void:
+func _end_dialogue(completed: bool = false) -> void:
+	if completed:
+		dialogue_completed.emit(_active_dialogue_id, _player)
 	_active = false
 	_prompt_panel.visible = false
 	_lines.clear()
-	if is_instance_valid(_player) and _player.has_method("set_movement_locked"):
-		_player.set_movement_locked(false)
+	if is_instance_valid(_player):
+		if _player.has_method("release_movement_lock"):
+			_player.release_movement_lock(&"dialogue")
+		elif _player.has_method("set_movement_locked"):
+			_player.set_movement_locked(false)
 	_player = null
+	_active_dialogue_id = &""
 
 func _build_ui() -> void:
 	_prompt_panel = PanelContainer.new()

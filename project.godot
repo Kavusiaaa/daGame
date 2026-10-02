@@ -23,6 +23,13 @@ config/icon="res://icon.svg"
 
 TransitionManager="*res://scripts/transition_manager.gd"
 DialogueManager="*res://scripts/dialogue_manager.gd"
+InventoryManager="*res://scripts/inventory_manager.gd"
+InventoryUI="*res://scripts/inventory_ui.gd"
+
+[display]
+
+window/size/mode=3
+window/stretch/mode="canvas_items"
 
 [editor]
 
