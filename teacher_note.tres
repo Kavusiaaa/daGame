@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/inventory_item.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/teacher_note.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+id = &"teacher_note"
+display_name = "Notatka od nauczyciela"
+description = "Krótka notatka od nauczyciela. Może przydać się podczas wykonywania przyszłych zadań."
+categories = 1
+icon = ExtResource("2_icon")
+max_stack = 1
+usable = false
+consumable = false
