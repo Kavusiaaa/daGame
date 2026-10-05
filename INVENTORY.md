@@ -1,6 +1,6 @@
 # Inventory system
 
-`InventoryManager` and `InventoryUI` are autoloads. Inventory data and definitions therefore survive room changes. The screen button appears while a player is present. Open panels hold the player's `inventory` movement lock; dialogue and transitions use separate owner locks.
+`InventoryManager` and `InventoryUI` are autoloads. Inventory data and definitions therefore survive room changes. The UI is parented under a full-viewport `Control` on its `CanvasLayer`, so the panel is centered in screen coordinates and recalculated on viewport resize. The screen button appears while a player is present. Open panels hold the player's `inventory` movement lock; dialogue and transitions use separate owner locks. Inventory can be toggled from the InputMap `inventory` action.
 
 ## Adding an item
 
@@ -13,7 +13,11 @@ The `categories` export is a flags field, so an item can appear under Collectibl
 
 ## Teacher note reward
 
-The classroom NPC uses the `teacher_note_dialogue` ID and `teacher_note_reward` reward ID. `DialogueManager.dialogue_completed` fires only when the player advances past the final line; cancelling a conversation does not grant the reward. `InventoryManager.grant_reward_once` stores the claimed reward in runtime game state and prevents duplicate copies. `teacher_note.tres` defines the item and `assets/teacher_note.svg` is its icon.
+The classroom NPC uses the `teacher_note_dialogue` ID and `teacher_note_reward` reward ID. `DialogueManager.dialogue_completed` fires only when the player advances past the final line; cancelling a conversation does not grant the reward. The manager clears its active state and releases the movement lock before emitting completion. NPC dialogue repeatability and one-time rewards are separate exported states. `InventoryManager.grant_reward_once` stores claimed reward IDs. Coins use a separate central balance through `add_coins`, `remove_coins`, and `get_coins`; they are not inventory stacks. `teacher_note.tres` defines the item and `assets/teacher_note.svg` is its icon.
+
+## Pause, settings, and save foundation
+
+`PauseMenu` is a persistent `CanvasLayer` autoload with `PROCESS_MODE_ALWAYS`; ESC toggles it while the `SceneTree` pause stops gameplay. Options use the existing `Music` and `SFX` buses and InputMap actions. `GameSettings` persists those values, keyboard binds, and mouse sensitivity to `user://settings.cfg`. Pause menu saves inventory stacks, coin balance, and claimed rewards to `user://savegame.json`. Save loading and broader world/player restoration remain future work.
 
 ## Display scaling
 

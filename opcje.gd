@@ -12,6 +12,10 @@ var credits_speed = 50  # pikseli na sekundę
 var credits_active = false
 
 func _ready():
+	# Use the same persistent settings page as the in-game pause menu.
+	PauseMenu.open_title_options()
+	return
+	# Legacy scene controls retained below for compatibility with existing scenes.
 	# Sprawdzenie, czy node'y istnieją
 	assert(sfx_slider != null, "Nie znaleziono SFXSlider! Sprawdź ścieżkę w @onready")
 	assert(music_slider != null, "Nie znaleziono MusicSlider!")

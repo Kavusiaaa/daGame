@@ -36,7 +36,18 @@ func _process(_delta: float) -> void:
 	if _panel.visible and (not is_instance_valid(player) or dialog_open):
 		_close_panel()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("inventory") and not event.is_echo() and not DialogueManager.is_active() and not get_tree().paused:
+		get_viewport().set_input_as_handled()
+		_toggle_panel()
+
 func _build_ui() -> void:
+	# The Inventory autoload is a CanvasLayer, so this full-rect overlay is
+	# anchored to the viewport and never inherits a world/camera transform.
+	var overlay := Control.new()
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	overlay.mouse_filter = Control.MOUSE_FILTER_PASS
+	add_child(overlay)
 	_toggle = Button.new()
 	_toggle.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	_toggle.position = Vector2(-74, 18)
@@ -44,16 +55,15 @@ func _build_ui() -> void:
 	_toggle.set_script(preload("res://scripts/inventory_icon.gd"))
 	_toggle.tooltip_text = "Ekwipunek"
 	_toggle.pressed.connect(_toggle_panel)
-	add_child(_toggle)
+	overlay.add_child(_toggle)
 
 	_panel = PanelContainer.new()
-	_panel.set_anchors_preset(Control.PRESET_CENTER)
-	_panel.position = Vector2(-340, -250)
-	_panel.size = Vector2(680, 500)
+	_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	_panel.custom_minimum_size = Vector2(320, 280)
 	_panel.add_theme_stylebox_override("panel", _style(PANEL_BG, ACCENT, 2, 12))
 	_panel.visible = false
 	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(_panel)
+	overlay.add_child(_panel)
 
 	var content := VBoxContainer.new()
 	content.add_theme_constant_override("separation", 14)
@@ -131,8 +141,11 @@ func _resize_panel() -> void:
 	if not is_instance_valid(_panel):
 		return
 	var viewport_size := get_viewport().get_visible_rect().size
-	_panel.size = Vector2(maxf(240.0, minf(680.0, viewport_size.x - 32.0)), maxf(240.0, minf(500.0, viewport_size.y - 32.0)))
-	_panel.position = -_panel.size * 0.5
+	var panel_size := Vector2(minf(680.0, viewport_size.x - 32.0), minf(500.0, viewport_size.y - 32.0))
+	_panel.offset_left = -panel_size.x * 0.5
+	_panel.offset_top = -panel_size.y * 0.5
+	_panel.offset_right = panel_size.x * 0.5
+	_panel.offset_bottom = panel_size.y * 0.5
 	_grid.columns = maxi(1, int((_panel.size.x - 64.0) / 122.0))
 
 func _toggle_panel() -> void:
@@ -140,6 +153,13 @@ func _toggle_panel() -> void:
 		_close_panel()
 	else:
 		_open_panel()
+
+func is_open() -> bool:
+	return is_instance_valid(_panel) and _panel.visible
+
+func close_from_manager() -> void:
+	if is_open():
+		_close_panel()
 
 func _open_panel() -> void:
 	_player = get_tree().get_first_node_in_group("player")

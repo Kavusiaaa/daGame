@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 			_character_accumulator -= characters_to_reveal
 			_visible_characters = mini(_visible_characters + characters_to_reveal, _body.text.length())
 			_body.visible_characters = _visible_characters
-	if _active and Input.is_action_just_pressed("interact"):
+	if _active and Input.is_action_just_pressed("interact") and not get_tree().paused:
 		_advance()
 
 func is_active() -> bool:
@@ -73,18 +73,22 @@ func _show_line(default_speaker: String) -> void:
 	_prompt_panel.visible = true
 
 func _end_dialogue(completed: bool = false) -> void:
-	if completed:
-		dialogue_completed.emit(_active_dialogue_id, _player)
+	var finished_id := _active_dialogue_id
+	var finished_player := _player
+	# Clear manager state before emitting. Listeners may query or start another
+	# conversation from the completion signal.
 	_active = false
-	_prompt_panel.visible = false
+	_active_dialogue_id = &""
 	_lines.clear()
+	_prompt_panel.visible = false
 	if is_instance_valid(_player):
 		if _player.has_method("release_movement_lock"):
 			_player.release_movement_lock(&"dialogue")
 		elif _player.has_method("set_movement_locked"):
 			_player.set_movement_locked(false)
 	_player = null
-	_active_dialogue_id = &""
+	if completed:
+		dialogue_completed.emit(finished_id, finished_player)
 
 func _build_ui() -> void:
 	_prompt_panel = PanelContainer.new()
