@@ -10,7 +10,6 @@ size = Vector2(32, 64)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2060980068]
 z_index = 1
-groups = ["player", "Player"]
 script = ExtResource("1_1ftpm")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=901498089]
@@ -25,4 +24,4 @@ shape = SubResource("RectangleShape2D_6pdrq")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1893137810]
 z_index = 1
-zoom = Vector2(0.75, 0.75)
+zoom = Vector2(1.5, 1.5)
