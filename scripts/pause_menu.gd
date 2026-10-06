@@ -7,13 +7,20 @@ var _stack: Control
 var _confirming := false
 var _waiting_action: StringName = &""
 var _toast: Label
-var _from_gameplay := true
+var _from_gameplay := false
 
 func _ready() -> void:
 	layer = 110
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_build()
 	get_tree().node_added.connect(_on_node_added)
+
+func enter_title_menu() -> void:
+	get_tree().paused = false
+	_root.visible = false
+	_from_gameplay = false
+	_confirming = false
+	_waiting_action = &""
 
 func _on_node_added(node: Node) -> void:
 	if node.is_in_group("player"):
@@ -27,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_waiting_action = &""
 				_show_options()
 		return
-	if not event.is_action_pressed("pause") or event.is_echo():
+	if not event.is_action_pressed("pause") or event.is_echo() or not _from_gameplay:
 		return
 	get_viewport().set_input_as_handled()
 	if not get_tree().paused and not _from_gameplay:

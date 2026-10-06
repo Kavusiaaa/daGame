@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Adventure Theme.mp3-fe8e0d3c6d9075b8d6c1cd99b
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
