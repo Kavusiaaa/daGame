@@ -7,6 +7,7 @@ extends Node2D
 	{"speaker": "Woźny", "text": "Piwnica jest zamknięta. Lepiej tam nie schodź."}
 ]
 @export var dialogue_id: StringName = &""
+@export var return_dialogue: Array[Dictionary] = [{"speaker": "WoĹşny", "text": "Witaj ponownie."}]
 @export var completion_reward_id: StringName = &""
 @export var completion_reward_item_id: StringName = &""
 @export var completion_reward_coins: int = 0
@@ -14,6 +15,7 @@ extends Node2D
 @export var can_interact := true
 @export var dialogue_completed := false
 @export var reward_given := false
+var has_met_npc := false
 
 var player_near: Node2D
 @onready var prompt: Label = $Chat_detection_area/Label
@@ -24,15 +26,17 @@ func _ready() -> void:
 	DialogueManager.dialogue_completed.connect(_on_dialogue_completed)
 
 func _process(_delta: float) -> void:
-	if can_interact and is_instance_valid(player_near) and Input.is_action_just_pressed("interact") and not DialogueManager.is_active():
+	if can_interact and is_instance_valid(player_near) and Input.is_action_just_pressed("interact") and DialogueManager.can_start_dialogue():
 		if dialogue_completed and not repeatable_dialogue:
 			return
-		DialogueManager.start_dialogue(npc_name, dialogue, player_near, dialogue_id)
+		var lines := dialogue if not has_met_npc else return_dialogue
+		DialogueManager.start_dialogue(npc_name, lines, player_near, dialogue_id)
 
 func _on_dialogue_completed(completed_dialogue_id: StringName, _player: Node) -> void:
 	if completed_dialogue_id != dialogue_id:
 		return
 	dialogue_completed = true
+	has_met_npc = true
 	if reward_given:
 		return
 	if not completion_reward_id.is_empty() and not completion_reward_item_id.is_empty():

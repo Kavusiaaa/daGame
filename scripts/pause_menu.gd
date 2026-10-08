@@ -26,7 +26,7 @@ func _on_node_added(node: Node) -> void:
 	if node.is_in_group("player"):
 		_from_gameplay = true
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if _waiting_action != &"":
 		if event is InputEventKey and event.is_pressed() and not event.is_echo():
 			get_viewport().set_input_as_handled()
@@ -34,13 +34,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				_waiting_action = &""
 				_show_options()
 		return
-	if not event.is_action_pressed("pause") or event.is_echo() or not _from_gameplay:
+	var is_pause_event := event.is_action_pressed("pause")
+	if event is InputEventKey:
+		is_pause_event = is_pause_event or (event.pressed and not event.is_echo() and (event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE))
+	if not _from_gameplay and get_tree().get_first_node_in_group("player") != null:
+		_from_gameplay = true
+	if not is_pause_event or event.is_echo() or not _from_gameplay:
 		return
 	get_viewport().set_input_as_handled()
-	if not get_tree().paused and not _from_gameplay:
-		_root.visible = false
-		get_tree().change_scene_to_file("res://main_menu.tscn")
-		return
 	if _confirming:
 		_confirming = false
 		_show_main()
@@ -53,6 +54,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			_resume()
 	else:
 		_open()
+
+func _unhandled_input(event: InputEvent) -> void:
+	_input(event)
 
 func _open() -> void:
 	if InventoryUI.is_open():

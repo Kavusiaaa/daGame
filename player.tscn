@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dt5jfxa0xa3c8" path="res://assets/sprites/PostacJG.png" id="2_onrkg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6pdrq"]
-size = Vector2(32, 64)
+size = Vector2(32, 32)
 
 [node name="Player" type="Node2D" unique_id=1801684532]
 
@@ -20,6 +20,7 @@ texture = ExtResource("2_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=722313964]
 z_index = 1
+position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_6pdrq")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1893137810]

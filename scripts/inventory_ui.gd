@@ -13,6 +13,7 @@ var _collectibles_tab: Button
 var _gameplay_tab: Button
 var _details_title: Label
 var _details_description: Label
+var _previous_mouse_mode := Input.MOUSE_MODE_VISIBLE
 var _selected_category := ItemDefinition.Category.COLLECTIBLE
 var _selected_item_id: StringName = &""
 var _player: Node
@@ -46,7 +47,7 @@ func _build_ui() -> void:
 	# anchored to the viewport and never inherits a world/camera transform.
 	var overlay := Control.new()
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	overlay.mouse_filter = Control.MOUSE_FILTER_PASS
+	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(overlay)
 	_toggle = Button.new()
 	_toggle.set_anchors_preset(Control.PRESET_TOP_RIGHT)
@@ -65,9 +66,18 @@ func _build_ui() -> void:
 	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	overlay.add_child(_panel)
 
+	var margins := MarginContainer.new()
+	margins.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	margins.add_theme_constant_override("margin_left", 20)
+	margins.add_theme_constant_override("margin_top", 18)
+	margins.add_theme_constant_override("margin_right", 20)
+	margins.add_theme_constant_override("margin_bottom", 18)
+	_panel.add_child(margins)
 	var content := VBoxContainer.new()
 	content.add_theme_constant_override("separation", 14)
-	_panel.add_child(content)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	margins.add_child(content)
 	var header := HBoxContainer.new()
 	content.add_child(header)
 	var title := Label.new()
@@ -105,9 +115,14 @@ func _build_ui() -> void:
 	_grid = GridContainer.new()
 	_grid.columns = 5
 	_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_grid.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	_grid.add_theme_constant_override("h_separation", 10)
 	_grid.add_theme_constant_override("v_separation", 10)
-	scroller.add_child(_grid)
+	var grid_center := CenterContainer.new()
+	grid_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid_center.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	grid_center.add_child(_grid)
+	scroller.add_child(grid_center)
 	_empty = Label.new()
 	_empty.text = "Brak przedmiotów"
 	_empty.custom_minimum_size = Vector2(0, 160)
@@ -165,6 +180,8 @@ func _open_panel() -> void:
 	_player = get_tree().get_first_node_in_group("player")
 	if not is_instance_valid(_player) or DialogueManager.is_active():
 		return
+	_previous_mouse_mode = Input.mouse_mode
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_panel.visible = true
 	if _player.has_method("acquire_movement_lock"):
 		_player.acquire_movement_lock(&"inventory")
@@ -175,6 +192,7 @@ func _open_panel() -> void:
 
 func _close_panel() -> void:
 	_panel.visible = false
+	Input.mouse_mode = _previous_mouse_mode
 	_release_lock()
 
 func _release_lock() -> void:

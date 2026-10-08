@@ -84,6 +84,7 @@ sources/5 = SubResource("TileSetAtlasSource_4wnxl")
 stream = ExtResource("1_wvpkg")
 volume_db = 2.709
 autoplay = true
+max_distance = 4096.0
 bus = &"Music"
 
 [node name="Player" parent="." unique_id=1354704991 instance=ExtResource("1_4ow0s")]

@@ -4,7 +4,6 @@ signal dialogue_completed(dialogue_id: StringName, player: Node)
 
 var _active := false
 var _lines: Array[Dictionary] = []
-var _index := 0
 var _visible_characters := 0
 var _character_accumulator := 0.0
 var _player: Node
@@ -13,12 +12,15 @@ var _body: Label
 var _hint: Label
 var _prompt_panel: PanelContainer
 var _active_dialogue_id: StringName = &""
+var _await_interact_release := false
 
 func _ready() -> void:
 	layer = 90
 	_build_ui()
 
 func _process(delta: float) -> void:
+	if _await_interact_release and not Input.is_action_pressed("interact"):
+		_await_interact_release = false
 	if _active and _visible_characters < _body.text.length():
 		_character_accumulator += 48.0 * delta
 		var characters_to_reveal := int(_character_accumulator)
@@ -26,8 +28,22 @@ func _process(delta: float) -> void:
 			_character_accumulator -= characters_to_reveal
 			_visible_characters = mini(_visible_characters + characters_to_reveal, _body.text.length())
 			_body.visible_characters = _visible_characters
-	if _active and Input.is_action_just_pressed("interact") and not get_tree().paused:
-		_advance()
+
+func can_start_dialogue() -> bool:
+	return not _active and not _await_interact_release
+
+func _input(event: InputEvent) -> void:
+	if not _active or get_tree().paused or _await_interact_release:
+		return
+	var advance_pressed := event.is_action_pressed("interact")
+	if event is InputEventKey:
+		advance_pressed = advance_pressed or (event.pressed and not event.is_echo() and event.keycode in [KEY_SPACE, KEY_ENTER, KEY_KP_ENTER, KEY_E])
+	elif event is InputEventMouseButton:
+		advance_pressed = advance_pressed or (event.button_index == MOUSE_BUTTON_LEFT and event.pressed)
+	if not advance_pressed:
+		return
+	get_viewport().set_input_as_handled()
+	_advance()
 
 func is_active() -> bool:
 	return _active
@@ -36,15 +52,15 @@ func start_dialogue(default_speaker: String, lines: Array[Dictionary], player: N
 	if _active or lines.is_empty() or not is_instance_valid(player):
 		return
 	_lines = lines.duplicate(true)
-	_index = 0
 	_player = player
 	_active_dialogue_id = dialogue_id
+	_await_interact_release = false
 	_active = true
 	if player.has_method("acquire_movement_lock"):
 		player.acquire_movement_lock(&"dialogue")
 	elif player.has_method("set_movement_locked"):
 		player.set_movement_locked(true)
-	_show_line(default_speaker)
+	_show_next_line(default_speaker)
 
 func cancel_dialogue(player: Node) -> void:
 	if _active and player == _player:
@@ -56,14 +72,17 @@ func _advance() -> void:
 		_character_accumulator = 0.0
 		_body.visible_characters = _visible_characters
 		return
-	_index += 1
-	if _index >= _lines.size():
+	if _lines.is_empty():
 		_end_dialogue(true)
 	else:
-		_show_line("")
+		_show_next_line()
 
-func _show_line(default_speaker: String) -> void:
-	var line: Dictionary = _lines[_index]
+func _show_next_line(default_speaker := "") -> void:
+	if _lines.is_empty():
+		_end_dialogue(true)
+		return
+	var line: Dictionary = _lines.pop_front()
+	default_speaker = str(line.get("speaker", default_speaker))
 	_speaker.text = str(line.get("speaker", default_speaker))
 	_body.text = str(line.get("text", ""))
 	_visible_characters = 0
@@ -78,9 +97,13 @@ func _end_dialogue(completed: bool = false) -> void:
 	# Clear manager state before emitting. Listeners may query or start another
 	# conversation from the completion signal.
 	_active = false
+	_await_interact_release = true
 	_active_dialogue_id = &""
 	_lines.clear()
 	_prompt_panel.visible = false
+	_speaker.text = ""
+	_body.text = ""
+	_hint.text = ""
 	if is_instance_valid(_player):
 		if _player.has_method("release_movement_lock"):
 			_player.release_movement_lock(&"dialogue")
