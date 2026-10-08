@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dafaen66og2gv"]
 
-[ext_resource type="Texture2D" uid="uid://cg2ujh35cd2vr" path="res://assets/other/krzesloBeta1.png" id="1_knj3a"]
+[ext_resource type="Texture2D" uid="uid://d1487xidmpn1x" path="res://assets/tiles/krzeslo.png" id="1_knj3a"]
 
 [node name="Node2D" type="Node2D" unique_id=1896604921]
 

@@ -1,20 +1,19 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bumhg0nyroca4"]
 
 [ext_resource type="PackedScene" uid="uid://ck6nawhto6p04" path="res://table.tscn" id="1_table"]
 [ext_resource type="PackedScene" uid="uid://dafaen66og2gv" path="res://chair.tscn" id="2_chair"]
 [ext_resource type="PackedScene" uid="uid://eiust1kpddet" path="res://npc.tscn" id="3_npc"]
 
-[node name="Classroom" type="Node2D"]
+[node name="Classroom" type="Node2D" unique_id=1089786956]
 
-[node name="Table1" parent="." instance=ExtResource("1_table")]
+[node name="Table1" parent="." unique_id=988403729 instance=ExtResource("1_table")]
 position = Vector2(46, 31)
 rotation = 1.5701586
 scale = Vector2(1.9589834, 1.7214671)
 
-[node name="Krzeslo1" parent="." instance=ExtResource("2_chair")]
-position = Vector2(-1, 1)
-rotation = 0.2617994
+[node name="Krzeslo1" parent="." unique_id=362448669 instance=ExtResource("2_chair")]
+position = Vector2(-2, 7)
 scale = Vector2(1.9589834, 1.7214671)
 
-[node name="npc" parent="." instance=ExtResource("3_npc")]
+[node name="npc" parent="." unique_id=1829432964 instance=ExtResource("3_npc")]
 z_index = 1
