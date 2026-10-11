@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://bu4x8o7hfoiy8" path="res://assets/tiles/czarnaczern.png" id="8_t6jpy"]
 [ext_resource type="PackedScene" uid="uid://bumhg0nyroca4" path="res://classroom.tscn" id="9_classroom"]
 [ext_resource type="Texture2D" uid="uid://dylayc266a0ga" path="res://assets/drzwi/drzwi01.png" id="10_1ep0b"]
+[ext_resource type="Script" uid="uid://jd0i5q34gsgo" path="res://press_e.gd" id="12_5ppc1"]
+[ext_resource type="Texture2D" uid="uid://dj6sly885vuke" path="res://assets/tiles/guzikE.png" id="13_c0jbl"]
+[ext_resource type="Texture2D" uid="uid://bb7vbfo7emyod" path="res://assets/tiles/guzikewcisniety.png" id="14_w6isl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qt6c6"]
 texture = ExtResource("2_ryrou")
@@ -135,6 +138,12 @@ position = Vector2(-4, -12)
 
 [node name="TeleportPoint" parent="Door" index="2" unique_id=770240921]
 position = Vector2(1535, -2656)
+
+[node name="pressE" type="TextureRect" parent="Door" unique_id=792530360]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_5ppc1")
+textures = Array[Texture2D]([ExtResource("13_c0jbl"), ExtResource("14_w6isl")])
 
 [node name="Classroom_01" parent="." unique_id=830324205 instance=ExtResource("9_classroom")]
 z_index = 1

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cvryepuwjmxhp"]
+
+[node name="Node2D" type="Node2D" unique_id=473718775]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=604676372]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=617712950]
+
+[node name="lewastrzalka" type="Node2D" parent="." unique_id=1683627199]
+
+[node name="dolstrzalka" type="Node2D" parent="." unique_id=382226587]
+
+[node name="gorastrzalka" type="Node2D" parent="." unique_id=773443433]
+
+[node name="prawostrzalka" type="Node2D" parent="." unique_id=1017272950]
