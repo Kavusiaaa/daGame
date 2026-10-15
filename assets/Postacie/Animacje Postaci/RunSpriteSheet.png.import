@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvaallvhtwxls"
-path="res://.godot/imported/PostacJG-sheet.png-5079cd97f02c98daf8c820f00ad938c3.ctex"
+uid="uid://c6j2ugm2vyf7i"
+path="res://.godot/imported/RunSpriteSheet.png-cc15649145283290bcd0e5a9a124f7fb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Postacie/PostacJG-sheet.png"
-dest_files=["res://.godot/imported/PostacJG-sheet.png-5079cd97f02c98daf8c820f00ad938c3.ctex"]
+source_file="res://assets/Postacie/Animacje Postaci/RunSpriteSheet.png"
+dest_files=["res://.godot/imported/RunSpriteSheet.png-cc15649145283290bcd0e5a9a124f7fb.ctex"]
 
 [params]
 
