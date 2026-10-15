@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddrpd3a8vbsd6"
-path="res://.godot/imported/strzalkalewo.png-219de4a9c0bb47d6f457f1adac14936f.ctex"
+uid="uid://qst3c37iv4mj"
+path="res://.godot/imported/strzalkadol.png-815c651e51165a0612c8607f349228f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/strzalkalewo.png"
-dest_files=["res://.godot/imported/strzalkalewo.png-219de4a9c0bb47d6f457f1adac14936f.ctex"]
+source_file="res://assets/UI/strzalkadol.png"
+dest_files=["res://.godot/imported/strzalkadol.png-815c651e51165a0612c8607f349228f2.ctex"]
 
 [params]
 

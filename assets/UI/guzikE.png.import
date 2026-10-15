@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsggbp1retqpm"
-path="res://.godot/imported/strzalkaprawo.png-483a6fff5140b7ceebae6514276fbefb.ctex"
+uid="uid://dj6sly885vuke"
+path="res://.godot/imported/guzikE.png-fb4abeee364270db30621a3fe6553c93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/strzalkaprawo.png"
-dest_files=["res://.godot/imported/strzalkaprawo.png-483a6fff5140b7ceebae6514276fbefb.ctex"]
+source_file="res://assets/UI/guzikE.png"
+dest_files=["res://.godot/imported/guzikE.png-fb4abeee364270db30621a3fe6553c93.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb7vbfo7emyod"
-path="res://.godot/imported/guzikewcisniety.png-85fc2edaac170af3aade0393e888a77f.ctex"
+uid="uid://ddrpd3a8vbsd6"
+path="res://.godot/imported/strzalkalewo.png-cdaba1410a86981ccebf6d3ddcf96f72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/guzikewcisniety.png"
-dest_files=["res://.godot/imported/guzikewcisniety.png-85fc2edaac170af3aade0393e888a77f.ctex"]
+source_file="res://assets/UI/strzalkalewo.png"
+dest_files=["res://.godot/imported/strzalkalewo.png-cdaba1410a86981ccebf6d3ddcf96f72.ctex"]
 
 [params]
 

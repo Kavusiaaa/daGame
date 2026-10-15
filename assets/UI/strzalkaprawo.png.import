@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cocipp82ay2y2"
-path="res://.godot/imported/strzalkagora.png-81ad2f6bd241524559e03879d6f284a0.ctex"
+uid="uid://bsggbp1retqpm"
+path="res://.godot/imported/strzalkaprawo.png-d982c94686dfb6d8042f35385232b281.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/strzalkagora.png"
-dest_files=["res://.godot/imported/strzalkagora.png-81ad2f6bd241524559e03879d6f284a0.ctex"]
+source_file="res://assets/UI/strzalkaprawo.png"
+dest_files=["res://.godot/imported/strzalkaprawo.png-d982c94686dfb6d8042f35385232b281.ctex"]
 
 [params]
 

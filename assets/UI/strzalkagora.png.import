@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qst3c37iv4mj"
-path="res://.godot/imported/strzalkadol.png-211d1e8a9b831e67a4909008d724af25.ctex"
+uid="uid://cocipp82ay2y2"
+path="res://.godot/imported/strzalkagora.png-89f80c1858885030e3847bd98c0fb1a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/strzalkadol.png"
-dest_files=["res://.godot/imported/strzalkadol.png-211d1e8a9b831e67a4909008d724af25.ctex"]
+source_file="res://assets/UI/strzalkagora.png"
+dest_files=["res://.godot/imported/strzalkagora.png-89f80c1858885030e3847bd98c0fb1a6.ctex"]
 
 [params]
 
