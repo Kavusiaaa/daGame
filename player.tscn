@@ -179,7 +179,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b26j0")
 }],
-"loop": 1,
+"loop": true,
 "name": &"IdleBack",
 "speed": 8.0
 }, {
@@ -196,7 +196,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sweqy")
 }],
-"loop": 1,
+"loop": true,
 "name": &"IdleFront",
 "speed": 8.0
 }, {
@@ -213,7 +213,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_urp6f")
 }],
-"loop": 1,
+"loop": true,
 "name": &"IdleLeft",
 "speed": 8.0
 }, {
@@ -230,7 +230,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_op7ga")
 }],
-"loop": 1,
+"loop": true,
 "name": &"IdleRight",
 "speed": 8.0
 }, {
@@ -253,7 +253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7lmhl")
 }],
-"loop": 1,
+"loop": true,
 "name": &"RunDown",
 "speed": 8.0
 }, {
@@ -276,7 +276,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iruf7")
 }],
-"loop": 1,
+"loop": true,
 "name": &"RunLeft",
 "speed": 8.0
 }, {
@@ -299,7 +299,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hl5qd")
 }],
-"loop": 1,
+"loop": true,
 "name": &"RunRight",
 "speed": 8.0
 }, {
@@ -322,7 +322,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ny14h")
 }],
-"loop": 1,
+"loop": true,
 "name": &"RunUp",
 "speed": 8.0
 }]
@@ -330,11 +330,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6pdrq"]
 size = Vector2(16, 16)
 
-[node name="Player" type="Node2D" unique_id=1801684532]
+[node name="Player" type="Node2D" unique_id=1801684532 groups=["Player"]]
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2060980068 groups=["Player"]]
 z_index = 1
 script = ExtResource("1_1ftpm")
+speed = 420.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=949314793]
 sprite_frames = SubResource("SpriteFrames_2hs0m")
