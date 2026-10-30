@@ -12,7 +12,7 @@ func _ready() -> void:
 	_cover.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(_cover)
 
-func transition_player(player: Node2D, destination: Vector2, scene_path: String = "", spawn_path: NodePath = NodePath()) -> void:
+func transition_player(player: Node2D, destination: Vector2, scene_path: String = "", spawn_path: NodePath = NodePath(), room_id: StringName = &"") -> void:
 	if _busy or not is_instance_valid(player):
 		return
 	_busy = true
@@ -20,8 +20,10 @@ func transition_player(player: Node2D, destination: Vector2, scene_path: String 
 	await _fade_to(1.0, 0.22)
 	await get_tree().create_timer(0.12).timeout
 	if not scene_path.is_empty():
+		RoomManager.select_room(room_id)
 		var error := get_tree().change_scene_to_file(scene_path)
 		if error != OK:
+			RoomManager.select_room(&"")
 			push_error("Could not load door target scene: %s" % scene_path)
 			await _fade_to(0.0, 0.22)
 			_set_player_locked(player, false)

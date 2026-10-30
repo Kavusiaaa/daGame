@@ -112,7 +112,7 @@ texture_hover = ExtResource("6_llxoa")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=325933532]
 stream = ExtResource("11_iotk1")
-autoplay = true
+autoplay = false
 bus = &"Music"
 parameters/looping = true
 

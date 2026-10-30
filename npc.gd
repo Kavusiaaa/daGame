@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var npc_name: String = "Woźny"
+@export var npc_name: String = "Nauczyciel"
 @export var dialogue: Array[Dictionary] = [
 	{"speaker": "Woźny", "text": "Ej, ty!"},
 	{"speaker": "Gracz", "text": "Ja?"},
@@ -29,7 +29,12 @@ func _process(_delta: float) -> void:
 	if can_interact and is_instance_valid(player_near) and Input.is_action_just_pressed("interact") and DialogueManager.can_start_dialogue():
 		if dialogue_completed and not repeatable_dialogue:
 			return
-		var lines := dialogue if not has_met_npc else return_dialogue
+		var lines: Array[Dictionary] = dialogue if not has_met_npc else return_dialogue.duplicate(true)
+		# Treść powrotna nie może nadpisać imienia NPC; placeholder Woźny jest zastępowany nazwą z Inspectora.
+		if has_met_npc:
+			for line in lines:
+				if str(line.get("speaker", "")) == "Woźny":
+					line["speaker"] = npc_name
 		DialogueManager.start_dialogue(npc_name, lines, player_near, dialogue_id)
 
 func _on_dialogue_completed(completed_dialogue_id: StringName, _player: Node) -> void:

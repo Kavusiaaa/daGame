@@ -16,11 +16,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Frycz the Game 0.0.3"
 run/main_scene="res://main_menu.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
+MusicManager="*res://scripts/music_manager.gd"
+RoomManager="*res://scripts/room_manager.gd"
 TransitionManager="*res://scripts/transition_manager.gd"
 DialogueManager="*res://scripts/dialogue_manager.gd"
 InventoryManager="*res://scripts/inventory_manager.gd"
