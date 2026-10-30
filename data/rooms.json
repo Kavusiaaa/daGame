@@ -1,0 +1,127 @@
+{
+  "rooms": {
+    "classroom_01": {
+      "name": "Sala 1",
+      "spawn": [
+        0,
+        150
+      ],
+      "exit_position": [
+        240,
+        0
+      ],
+      "return_spawn": "RoomReturn01",
+      "furniture": [
+        {
+          "name": "Stół nauczyciela",
+          "scene": "res://table.tscn",
+          "position": [
+            46,
+            31
+          ],
+          "rotation": 1.5708,
+          "scale": [
+            1.5,
+            1.35
+          ]
+        },
+        {
+          "name": "Krzesło nauczyciela",
+          "scene": "res://chair.tscn",
+          "position": [
+            -2,
+            7
+          ],
+          "scale": [
+            1.5,
+            1.35
+          ]
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Nauczyciel",
+          "scene": "res://npc.tscn",
+          "position": [
+            0,
+            -105
+          ]
+        }
+      ]
+    },
+    "classroom_02": {
+      "name": "Sala 2",
+      "spawn": [
+        0,
+        150
+      ],
+      "exit_position": [
+        240,
+        0
+      ],
+      "return_spawn": "RoomReturn02",
+      "furniture": [
+        {
+          "name": "Stół 1",
+          "scene": "res://table.tscn",
+          "position": [
+            -76,
+            18
+          ],
+          "rotation": 1.5708,
+          "scale": [
+            1.25,
+            1.25
+          ]
+        },
+        {
+          "name": "Stół 2",
+          "scene": "res://table.tscn",
+          "position": [
+            72,
+            18
+          ],
+          "rotation": 1.5708,
+          "scale": [
+            1.25,
+            1.25
+          ]
+        },
+        {
+          "name": "Krzesło 1",
+          "scene": "res://chair.tscn",
+          "position": [
+            -76,
+            79
+          ],
+          "scale": [
+            1.25,
+            1.25
+          ]
+        },
+        {
+          "name": "Krzesło 2",
+          "scene": "res://chair.tscn",
+          "position": [
+            72,
+            79
+          ],
+          "scale": [
+            1.25,
+            1.25
+          ]
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Nauczyciel",
+          "scene": "res://npc.tscn",
+          "position": [
+            0,
+            -105
+          ]
+        }
+      ]
+    }
+  }
+}

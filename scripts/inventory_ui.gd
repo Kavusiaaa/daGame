@@ -13,6 +13,8 @@ var _collectibles_tab: Button
 var _gameplay_tab: Button
 var _details_title: Label
 var _details_description: Label
+var _read_button: Button
+var _note_reader: NoteReader
 var _previous_mouse_mode := Input.MOUSE_MODE_VISIBLE
 var _selected_category := ItemDefinition.Category.COLLECTIBLE
 var _selected_item_id: StringName = &""
@@ -37,10 +39,22 @@ func _process(_delta: float) -> void:
 	if _panel.visible and (not is_instance_valid(player) or dialog_open):
 		_close_panel()
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_ESCAPE]:
+		if _note_reader.visible or _panel.visible:
+			if _note_reader.visible:
+				_note_reader.close_reader()
+			else:
+				_close_panel()
+			get_viewport().set_input_as_handled()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory") and not event.is_echo() and not DialogueManager.is_active() and not get_tree().paused:
 		get_viewport().set_input_as_handled()
-		_toggle_panel()
+		if _note_reader.visible:
+			_note_reader.close_reader()
+		else:
+			_toggle_panel()
 
 func _build_ui() -> void:
 	# The Inventory autoload is a CanvasLayer, so this full-rect overlay is
@@ -135,22 +149,36 @@ func _build_ui() -> void:
 	_grid.add_child(_empty)
 
 	var details := PanelContainer.new()
-	details.custom_minimum_size = Vector2(0, 116)
+	details.custom_minimum_size = Vector2(0, 140)
 	details.add_theme_stylebox_override("panel", _style(Color(0.13, 0.15, 0.17, 1.0), Color(0.35, 0.38, 0.40), 1, 8))
 	content.add_child(details)
 	var detail_layout := VBoxContainer.new()
 	detail_layout.add_theme_constant_override("separation", 6)
-	details.add_child(detail_layout)
+	var detail_margins := MarginContainer.new()
+	detail_margins.add_theme_constant_override("margin_left", 12)
+	detail_margins.add_theme_constant_override("margin_top", 8)
+	detail_margins.add_theme_constant_override("margin_right", 12)
+	detail_margins.add_theme_constant_override("margin_bottom", 8)
+	details.add_child(detail_margins)
+	detail_margins.add_child(detail_layout)
 	_details_title = Label.new()
 	_details_title.text = "Wybierz przedmiot"
+	_details_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_details_title.add_theme_font_size_override("font_size", 18)
 	_details_title.add_theme_color_override("font_color", ACCENT)
 	detail_layout.add_child(_details_title)
 	_details_description = Label.new()
 	_details_description.text = ""
 	_details_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_details_description.custom_minimum_size = Vector2(0, 48)
 	_details_description.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	detail_layout.add_child(_details_description)
+	_read_button = Button.new()
+	_read_button.text = "Otwórz notatkę"
+	_read_button.pressed.connect(_open_note)
+	detail_layout.add_child(_read_button)
+	_note_reader = preload("res://NoteReader.tscn").instantiate() as NoteReader
+	overlay.add_child(_note_reader)
 
 func _resize_panel() -> void:
 	if not is_instance_valid(_panel):
@@ -161,7 +189,7 @@ func _resize_panel() -> void:
 	_panel.offset_top = -panel_size.y * 0.5
 	_panel.offset_right = panel_size.x * 0.5
 	_panel.offset_bottom = panel_size.y * 0.5
-	_grid.columns = maxi(1, int((_panel.size.x - 64.0) / 122.0))
+	_grid.columns = maxi(1, int((_panel.size.x - 130.0) / 122.0))
 
 func _toggle_panel() -> void:
 	if _panel.visible:
@@ -192,6 +220,8 @@ func _open_panel() -> void:
 
 func _close_panel() -> void:
 	_panel.visible = false
+	if is_instance_valid(_note_reader):
+		_note_reader.close_reader()
 	Input.mouse_mode = _previous_mouse_mode
 	_release_lock()
 
@@ -233,18 +263,22 @@ func _refresh() -> void:
 func _make_slot(definition: InventoryItem, amount: int) -> Control:
 	var slot := Button.new()
 	slot.pressed.connect(_select_item.bind(definition.id))
-	slot.custom_minimum_size = Vector2(112, 120)
+	slot.gui_input.connect(_on_slot_gui_input.bind(definition.id))
+	slot.set_meta("item_id", definition.id)
+	slot.custom_minimum_size = Vector2(112, 132)
 	var border := ACCENT if definition.id == _selected_item_id else Color(0.35, 0.38, 0.40)
 	var width := 2 if definition.id == _selected_item_id else 1
 	slot.add_theme_stylebox_override("normal", _style(SLOT_BG, border, width, 8))
 	slot.add_theme_stylebox_override("hover", _style(Color(0.2, 0.22, 0.24), ACCENT, 2, 8))
 	slot.add_theme_stylebox_override("pressed", _style(Color(0.23, 0.22, 0.18), ACCENT, 2, 8))
 	var stack := Control.new()
-	stack.custom_minimum_size = Vector2(100, 108)
+	stack.custom_minimum_size = Vector2(100, 124)
+	stack.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	slot.add_child(stack)
 	var icon := TextureRect.new()
 	icon.texture = definition.icon
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -252,18 +286,19 @@ func _make_slot(definition: InventoryItem, amount: int) -> Control:
 	icon.offset_left = 10
 	icon.offset_top = 8
 	icon.offset_right = -10
-	icon.offset_bottom = -34
+	icon.offset_bottom = -50
 	stack.add_child(icon)
 	var name_label := Label.new()
 	name_label.text = definition.display_name
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	name_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	name_label.offset_left = 3
-	name_label.offset_top = -28
-	name_label.offset_right = -3
+	name_label.offset_left = 5
+	name_label.offset_top = -46
+	name_label.offset_right = -5
 	name_label.offset_bottom = -3
+	name_label.custom_minimum_size = Vector2(0, 40)
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_label.tooltip_text = definition.description
 	stack.add_child(name_label)
 	var count := Label.new()
@@ -282,16 +317,30 @@ func _make_slot(definition: InventoryItem, amount: int) -> Control:
 
 func _select_item(item_id: StringName) -> void:
 	_selected_item_id = item_id
-	_refresh()
+	_update_details()
+	for slot in _grid.get_children():
+		if slot is Button and slot.has_meta("item_id"):
+			var selected: bool = slot.get_meta("item_id") == item_id
+			var border: Color = ACCENT if selected else Color(0.35, 0.38, 0.40)
+			slot.add_theme_stylebox_override("normal", _style(SLOT_BG, border, 2 if selected else 1, 8))
+
+func _on_slot_gui_input(event: InputEvent, item_id: StringName) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and event.double_click:
+		_select_item(item_id)
+		if item_id == &"teacher_note" and InventoryManager.has_item(item_id):
+			_open_note()
+		get_viewport().set_input_as_handled()
 
 func _update_details() -> void:
 	var definition := InventoryManager.get_definition(_selected_item_id)
 	if definition == null or not InventoryManager.has_item(_selected_item_id):
 		_details_title.text = "Wybierz przedmiot"
 		_details_description.text = ""
+		_read_button.visible = false
 		return
 	_details_title.text = definition.display_name
 	_details_description.text = definition.description
+	_read_button.visible = definition.id == &"teacher_note"
 
 func _on_item_added(item_id: StringName, _amount: int) -> void:
 	var definition := InventoryManager.get_definition(item_id)
@@ -311,3 +360,7 @@ func _style(background: Color, border: Color, width: int, radius: int) -> StyleB
 	box.content_margin_top = 16
 	box.content_margin_bottom = 16
 	return box
+
+func _open_note() -> void:
+	if _selected_item_id == &"teacher_note" and InventoryManager.has_item(_selected_item_id):
+		_note_reader.open_note()

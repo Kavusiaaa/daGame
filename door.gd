@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var target_scene: String = ""
+@export var target_room_id: StringName = &""
 @export var target_spawn_point: NodePath
 @export var door_name: String = "Sala lekcyjna"
 @export var locked: bool = false
@@ -34,7 +35,10 @@ func teleport_player() -> void:
 			push_warning("Door '%s' has no valid target_spawn_point." % door_name)
 			return
 		destination = target.global_position
-	TransitionManager.transition_player(player_near, destination, target_scene, target_spawn_point)
+	var destination_scene := target_scene
+	if destination_scene.is_empty() and not target_room_id.is_empty():
+		destination_scene = "res://classroom.tscn"
+	TransitionManager.transition_player(player_near, destination, destination_scene, target_spawn_point, target_room_id)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") or body.name == "Player":

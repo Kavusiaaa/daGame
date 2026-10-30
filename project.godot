@@ -21,6 +21,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+MusicManager="*res://scripts/music_manager.gd"
+RoomManager="*res://scripts/room_manager.gd"
 TransitionManager="*res://scripts/transition_manager.gd"
 DialogueManager="*res://scripts/dialogue_manager.gd"
 InventoryManager="*res://scripts/inventory_manager.gd"

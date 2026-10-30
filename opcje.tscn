@@ -18,7 +18,7 @@ script = ExtResource("1_cs4et")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1230406840]
 stream = ExtResource("2_f6jym")
-autoplay = true
+autoplay = false
 bus = &"Music"
 parameters/looping = true
 

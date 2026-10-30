@@ -9,7 +9,7 @@
 3. Add/remove items through `InventoryManager.add_item(&"id", amount)` and `remove_item(&"id", amount)`. These return the accepted/removed quantity. Use `has_item`, `get_item_count`, or `get_items` to query state. Inventory change signals notify UI and other systems.
 4. For a usable item, attach a script extending `InventoryItem` and override `use(user) -> bool`. Return `true` only when use succeeds; consumable items are then reduced by one.
 
-The `categories` export is a flags field, so an item can appear under Collectibles, Gameplay Items, or both. `teacher_note.tres` is the single registered item at this stage. Inventory slots can be selected to read their full description in the details area.
+The `categories` export is a flags field, so an item can appear under Collectibles, Gameplay Items, or both. `teacher_note.tres` is the single registered item at this stage. Inventory slots can be selected to read their full description in the details area; double-clicking the teacher note opens it directly. Item names and descriptions wrap inside padded containers. ENTER or ESC closes the open note reader or inventory panel.
 
 ## Teacher note reward
 
@@ -22,3 +22,11 @@ The classroom NPC uses the `teacher_note_dialogue` ID and `teacher_note_reward` 
 ## Display scaling
 
 The game starts in regular fullscreen at a 1152×648 logical viewport. Canvas item stretching with the `keep` aspect setting preserves UI and artwork proportions; screens with a different aspect ratio can show letterbox bars. The Inventory panel uses center anchors and resizes to the viewport with edge margins.
+
+## Reusable note reader
+
+NoteReader.tscn is a reusable Inspector-configured reader. On its root node set note_title, note_text (RichTextLabel BBCode is enabled), and credits_text; optionally set note_image or image_path. Inline images in the note body use [img]res://path/to/image.png[/img]. Credits have a dedicated footer section. The included note icon is 32x32 pixel art and is displayed with nearest-neighbor filtering.
+
+## Dynamic classrooms
+
+All classroom doors target classroom.tscn and pass a target_room_id. data/rooms.json defines each room configuration for spawn, exit placement, return marker, furniture scenes and NPCs. RoomManager selects the ID before scene change and scripts/classroom.gd builds the room from that configuration. Background music is played by the MusicManager autoload so scene changes do not recreate the music player.

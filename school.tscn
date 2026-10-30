@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c4oucrbqeiqh7"]
 
 [ext_resource type="PackedScene" uid="uid://bqfew17vuwqha" path="res://player.tscn" id="1_4ow0s"]
-[ext_resource type="AudioStream" uid="uid://phrrhpvooos6" path="res://music/MainMenu.mp3" id="1_wvpkg"]
 [ext_resource type="Texture2D" uid="uid://b3cxt450uivmk" path="res://assets/tiles/floor_beta.png" id="2_ryrou"]
 [ext_resource type="Texture2D" uid="uid://py4ny3avrhvt" path="res://assets/tiles/wall.png" id="3_apydt"]
 [ext_resource type="Texture2D" uid="uid://dvqq5lw7fc8av" path="res://assets/tiles/0.1sheet.png" id="4_o5ohq"]
@@ -11,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://hvbv43ogenep" path="res://assets/tiles/Cegla1-ftg.png" id="7_ryu2u"]
 [ext_resource type="Texture2D" uid="uid://bbu80f2muhg5s" path="res://assets/tiles/podloga-ftg.png" id="7_t6jpy"]
 [ext_resource type="Texture2D" uid="uid://bu4x8o7hfoiy8" path="res://assets/tiles/czarnaczern.png" id="8_t6jpy"]
-[ext_resource type="PackedScene" uid="uid://bumhg0nyroca4" path="res://classroom.tscn" id="9_classroom"]
 [ext_resource type="Texture2D" uid="uid://dylayc266a0ga" path="res://assets/drzwi/drzwi01.png" id="10_1ep0b"]
 [ext_resource type="Texture2D" uid="uid://cchm1m4acsx5e" path="res://assets/tiles/SzaraCegla2.png" id="11_7s71n"]
 [ext_resource type="Script" uid="uid://jd0i5q34gsgo" path="res://press_e.gd" id="12_5ppc1"]
@@ -133,22 +131,12 @@ size = Vector2(864, 608)
 texture = ExtResource("17_o5ohq")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-1:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_jimg6"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_bx6cq")
 
 [node name="Piętro 1" type="Node2D" unique_id=423429178]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1845399244]
-stream = ExtResource("1_wvpkg")
-volume_db = 2.709
-autoplay = true
-max_distance = 4096.0
-bus = &"Music"
 
 [node name="Player" parent="." unique_id=1354704991 instance=ExtResource("1_4ow0s")]
 editor_description = "67"
@@ -170,8 +158,10 @@ layer_0/tile_data = PackedInt32Array(-327658, 4, 0, -327657, 4, 0, -327656, 4, 0
 
 [node name="Door_01" parent="." unique_id=284665281 instance=ExtResource("5_wvpkg")]
 position = Vector2(-385, -160)
-target_spawn_point = NodePath("TeleportPoint")
-door_name = "Korytarz"
+target_scene = "res://classroom.tscn"
+target_room_id = &"classroom_01"
+target_spawn_point = NodePath("RoomSpawn")
+door_name = "Sala 1"
 
 [node name="Sprite2D" parent="Door_01" index="0" unique_id=415858728]
 texture = ExtResource("10_1ep0b")
@@ -181,7 +171,9 @@ position = Vector2(-1535, 2688)
 
 [node name="Door" parent="." unique_id=1468377996 instance=ExtResource("5_wvpkg")]
 position = Vector2(-1919, 2592)
-target_spawn_point = NodePath("TeleportPoint")
+target_scene = "res://classroom.tscn"
+target_room_id = &"classroom_02"
+target_spawn_point = NodePath("RoomSpawn")
 interaction_text = "E - Wyjdź"
 
 [node name="Sprite2D" parent="Door" index="0" unique_id=415858728]
@@ -198,9 +190,12 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("12_5ppc1")
 
+<<<<<<< Updated upstream
 [node name="Classroom_01" parent="." unique_id=830324205 instance=ExtResource("9_classroom")]
 z_index = 1
 position = Vector2(-2363, 2394)
+=======
+>>>>>>> Stashed changes
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1850590342]
 position = Vector2(-96, -385)
@@ -208,17 +203,24 @@ position = Vector2(-96, -385)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=670417339]
 shape = SubResource("SegmentShape2D_jimg6")
 
+[node name="RoomReturn01" type="Marker2D" parent="."]
+position = Vector2(-330, -105)
+
+[node name="RoomReturn02" type="Marker2D" parent="."]
+position = Vector2(-1865, 2645)
+
 [node name="Dziedziniec" type="Area2D" parent="." unique_id=247993476]
 z_index = 65
 position = Vector2(-385, -160)
 script = ExtResource("16_w6isl")
+roof_layer_path = NodePath("DachDziedziniec/TileMap")
 
 [node name="DachDziedziniec" type="CollisionShape2D" parent="Dziedziniec" unique_id=1326362489]
 position = Vector2(737, -496)
 shape = SubResource("RectangleShape2D_jimg6")
 
 [node name="TileMap" type="TileMap" parent="Dziedziniec/DachDziedziniec" unique_id=110300452]
-visible = false
+visible = true
 tile_set = SubResource("TileSet_jimg6")
 collision_visibility_mode = 2
 format = 2
