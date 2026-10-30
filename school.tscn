@@ -200,7 +200,7 @@ shape = SubResource("SegmentShape2D_jimg6")
 position = Vector2(-330, -105)
 
 [node name="RoomReturn02" type="Marker2D" parent="."]
-position = Vector2(-1865, 2645)
+position = Vector2(-1865, 2544)
 
 [node name="Dziedziniec" type="Area2D" parent="." unique_id=247993476]
 z_index = 65

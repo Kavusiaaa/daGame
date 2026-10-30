@@ -29,13 +29,18 @@ func transition_player(player: Node2D, destination: Vector2, scene_path: String 
 			_set_player_locked(player, false)
 			_busy = false
 			return
-		await get_tree().process_frame
+		await get_tree().scene_changed
 		player = get_tree().get_first_node_in_group("player") as Node2D
-		var spawn := get_tree().current_scene.get_node_or_null(spawn_path) as Node2D
+		var spawn := _find_spawn(spawn_path)
 		if spawn != null:
 			destination = spawn.global_position
 		else:
-			push_warning("Target scene has no spawn node at '%s'." % spawn_path)
+			push_error("Target scene '%s' has no spawn node at '%s'." % [scene_path, spawn_path])
+			RoomManager.select_room(&"")
+			await _fade_to(0.0, 0.22)
+			_set_player_locked(player, false)
+			_busy = false
+			return
 	if is_instance_valid(player):
 		player.global_position = destination
 		_set_player_locked(player, true)
@@ -59,3 +64,11 @@ func _fade_to(alpha: float, duration: float) -> void:
 	var tween := create_tween()
 	tween.tween_property(_cover, "modulate:a", alpha, duration)
 	await tween.finished
+
+func _find_spawn(spawn_path: NodePath) -> Node2D:
+	var scene := get_tree().current_scene
+	if is_instance_valid(scene):
+		var scene_spawn := scene.get_node_or_null(spawn_path) as Node2D
+		if scene_spawn != null:
+			return scene_spawn
+	return get_tree().root.find_child(str(spawn_path), true, false) as Node2D

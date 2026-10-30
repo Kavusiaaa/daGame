@@ -10,7 +10,7 @@ func _ready() -> void:
 	AchievementManager.achievement_unlocked.connect(_refresh)
 	_refresh()
 
-func _refresh() -> void:
+func _refresh(_achievement: AchievementResource = null) -> void:
 	if not is_node_ready():
 		return
 	for child in _rows.get_children():

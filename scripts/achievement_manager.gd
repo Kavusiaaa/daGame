@@ -2,6 +2,10 @@ extends Node
 
 signal achievement_unlocked(achievement: AchievementResource)
 
+# Editor workflow: create a Resource in res://data/achievements, choose AchievementResource,
+# set a unique ID, title, description and pixel-art icon, then save it as a .tres.
+# If its ID is first_door, any gameplay script can unlock it with AchievementManager.unlock_achievement("first_door").
+
 const ACHIEVEMENTS_DIR := "res://data/achievements"
 const SAVE_PATH := "user://achievements.cfg"
 const TOAST_SCENE: PackedScene = preload("res://AchievementToast.tscn")
