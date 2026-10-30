@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/AchievementPanel.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/achievements/pixel_frame.png" id="2_frame"]
+[ext_resource type="Texture2D" path="res://assets/achievements/pixel_dim.png" id="3_dim"]
+[ext_resource type="Texture2D" path="res://assets/achievements/pixel_line.png" id="4_line"]
+
+[node name="AchievementPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_dim")
+texture_filter = 1
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Panel" type="NinePatchRect" parent="."]
+offset_left = 196.0
+offset_top = 49.0
+offset_right = 956.0
+offset_bottom = 599.0
+texture = ExtResource("2_frame")
+texture_filter = 1
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Title" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 20.0
+offset_right = 610.0
+offset_bottom = 61.0
+theme_override_colors/font_color = Color(0.98, 0.83, 0.52, 1)
+theme_override_font_sizes/font_size = 28
+text = "OSIĄGNIĘCIA"
+
+[node name="Hint" type="Label" parent="Panel"]
+offset_left = 518.0
+offset_top = 28.0
+offset_right = 726.0
+offset_bottom = 54.0
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.85, 0.83, 0.77, 1)
+text = "ESC / K — zamknij"
+
+[node name="Separator" type="TextureRect" parent="Panel"]
+offset_left = 28.0
+offset_top = 73.0
+offset_right = 732.0
+offset_bottom = 77.0
+texture = ExtResource("4_line")
+texture_filter = 1
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Scroll" type="ScrollContainer" parent="Panel"]
+offset_left = 28.0
+offset_top = 91.0
+offset_right = 732.0
+offset_bottom = 501.0
+horizontal_scroll_mode = 0
+[node name="Rows" type="VBoxContainer" parent="Panel/Scroll"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+[node name="Footer" type="Label" parent="Panel"]
+offset_left = 34.0
+offset_top = 509.0
+offset_right = 720.0
+offset_bottom = 537.0
+theme_override_colors/font_color = Color(0.82, 0.79, 0.69, 1)
+text = "Osiągnięcia zapisują się automatycznie."

@@ -8,6 +8,8 @@ func _ready() -> void:
 	MusicManager.play_game_music()
 	var room_id := RoomManager.active_room_id
 	var config := RoomManager.get_room(room_id)
+	if not room_id.is_empty():
+		AchievementManager.unlock_achievement("enter_classroom")
 	if config.is_empty():
 		push_warning("Unknown classroom ID '%s'; loading classroom_01." % room_id)
 		room_id = &"classroom_01"

@@ -42,6 +42,8 @@ func _on_dialogue_completed(completed_dialogue_id: StringName, _player: Node) ->
 		return
 	dialogue_completed = true
 	has_met_npc = true
+	if dialogue_id == &"teacher_note_dialogue":
+		AchievementManager.unlock_achievement("met_the_teacher")
 	if reward_given:
 		return
 	if not completion_reward_id.is_empty() and not completion_reward_item_id.is_empty():

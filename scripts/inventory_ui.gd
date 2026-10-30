@@ -364,3 +364,4 @@ func _style(background: Color, border: Color, width: int, radius: int) -> StyleB
 func _open_note() -> void:
 	if _selected_item_id == &"teacher_note" and InventoryManager.has_item(_selected_item_id):
 		_note_reader.open_note()
+		AchievementManager.unlock_achievement("read_the_note")

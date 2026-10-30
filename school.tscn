@@ -190,13 +190,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("12_5ppc1")
 
-<<<<<<< Updated upstream
-[node name="Classroom_01" parent="." unique_id=830324205 instance=ExtResource("9_classroom")]
-z_index = 1
-position = Vector2(-2363, 2394)
-=======
->>>>>>> Stashed changes
-
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1850590342]
 position = Vector2(-96, -385)
 
